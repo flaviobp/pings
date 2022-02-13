@@ -26,7 +26,7 @@ public class Ping {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "account.id")
+    @JoinColumn(name = "author", referencedColumnName = "id", foreignKey = @ForeignKey(name = "pings_author_FK",foreignKeyDefinition = "FOREIGN KEY (author) REFERENCES account(id) ON DELETE CASCADE"))
     private Account author;
 
     @Column(length = 144)
@@ -37,10 +37,14 @@ public class Ping {
     @JoinTable(
             name = "ping_reply",
             joinColumns = @JoinColumn(name = "fk_id_ping", referencedColumnName = "id"),
+            foreignKey = @ForeignKey(
+                    name = "pings_replies_id_FK",
+                    foreignKeyDefinition = "FOREIGN KEY (fk_id_ping) REFERENCES ping(id) ON DELETE CASCADE"
+            ),
             inverseJoinColumns = @JoinColumn(name = "fk_id_reply", referencedColumnName = "id"),
             inverseForeignKey = @ForeignKey(
-                    name = "pings_replies_FK",
-                    foreignKeyDefinition = "FOREIGN KEY (fk_id_reply) REFERENCES ping(ping_id) ON DELETE CASCADE"
+                    name = "pings_replies_reply_FK",
+                    foreignKeyDefinition = "FOREIGN KEY (fk_id_reply) REFERENCES ping(id) ON DELETE CASCADE"
             )
     )
     private Set<Ping> replies;
