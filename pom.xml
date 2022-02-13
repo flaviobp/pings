@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.pingr</groupId>
-	<artifactId>Chassis</artifactId>
+	<artifactId>Pings</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>Chassis</name>
-	<description>Chassis for creating SpringBoot services in Pingr</description>
+	<name>Pings</name>
+	<description>Pings for creating SpringBoot services in Pingr</description>
 	<properties>
 		<java.version>11</java.version>
 	</properties>

@@ -69,3 +69,78 @@ As of the date this document is being written, the spots are:
 
 [chassis]: https://microservices.io/patterns/microservice-chassis.html
 [template]: https://microservices.io/patterns/service-template.html
+
+
+
+
+
+
+
+
+
+# pings
+Curso de verão do IME - Introdução a Microsserviços com SpringBoot
+
+## subir infra
+docker-compose up -d
+
+## criar database
+docker exec -it  <ID> psql -c "CREATE DATABASE pings"
+
+## permissoes para root
+docker exec -it  <ID> psql -c "GRANT ALL PRIVILEGES ON DATABASE pings TO root"
+
+# subir apenas o database do serviço de contas (account)
+docker-compose up pg 
+
+## enviar post para criar conta
+http POST :8081/accounts < account.json
+
+## create
+Get-Content account.json | http POST :8081/accounts
+
+## delete
+http DELETE :8081/accounts/1
+
+
+
+## get
+http GET :8083/pings/:id
+
+## create
+http POST :8083/pings/1 < ping.json
+
+Get-Content ping.json | http POST :8083/pings/1
+
+## reply
+http POST :8083/pings/1/replies/1 < reply.json
+Get-Content reply.json | http POST :8083/pings/1/replies/1
+
+## delete
+http DELETE :8083/pings/:id
+
+
+
+## Kafdrop
+localhost:19000
+
+
+
+
+as estruturas destes eventos são como seguem:
+PingCreatedEvent
+eventType: "PingCreatedEvent"
+pingId: <Long>
+payload:
+	pingId: <Long>
+	body: <String>
+	authorId: <Long>
+deve ser publicado no tópico: ping_created
+
+PingDeletedEvent
+eventType: "PingDeletedEvent"
+pingId: <Long>
+payload:
+	pingId: <Long>
+	authorId: <Long>
+deve ser publicado no tópico: ping_deleted
